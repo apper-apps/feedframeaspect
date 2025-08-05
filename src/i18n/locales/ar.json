@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "FeedFrame",
+    "subtitle": "تضمين خلاصات إنستغرام",
+    "tagline": "إنشاء • معاينة • تضمين"
+  },
+  "language": {
+    "select": "اختيار اللغة",
+    "english": "English",
+    "chinese": "中文",
+    "hindi": "हिंदी",
+    "spanish": "Español",
+    "french": "Français",
+    "arabic": "العربية",
+    "bengali": "বাংলা",
+    "russian": "Русский",
+    "portuguese": "Português",
+    "indonesian": "Bahasa Indonesia"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "clients": "العملاء",
+    "feeds": "الخلاصات",
+    "settings": "الإعدادات"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "search": "بحث...",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "actions": "الإجراءات"
+  }
+}

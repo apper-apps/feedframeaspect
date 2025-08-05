@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "FeedFrame",
+    "subtitle": "Embed Feed Instagram",
+    "tagline": "Generate • Preview • Embed"
+  },
+  "language": {
+    "select": "Pilih Bahasa",
+    "english": "English",
+    "chinese": "中文",
+    "hindi": "हिंदी",
+    "spanish": "Español",
+    "french": "Français",
+    "arabic": "العربية",
+    "bengali": "বাংলা",
+    "russian": "Русский",
+    "portuguese": "Português",
+    "indonesian": "Bahasa Indonesia"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "clients": "Klien",
+    "feeds": "Feed",
+    "settings": "Pengaturan"
+  },
+  "common": {
+    "loading": "Memuat...",
+    "error": "Error",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "create": "Buat",
+    "search": "Cari...",
+    "filter": "Filter",
+    "sort": "Urutkan",
+    "actions": "Aksi"
+  }
+}

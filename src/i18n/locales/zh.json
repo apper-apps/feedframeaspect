@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "FeedFrame",
+    "subtitle": "Instagram 动态嵌入",
+    "tagline": "生成 • 预览 • 嵌入"
+  },
+  "language": {
+    "select": "选择语言",
+    "english": "English",
+    "chinese": "中文",
+    "hindi": "हिंदी",
+    "spanish": "Español",
+    "french": "Français",
+    "arabic": "العربية",
+    "bengali": "বাংলা",
+    "russian": "Русский",
+    "portuguese": "Português",
+    "indonesian": "Bahasa Indonesia"
+  },
+  "navigation": {
+    "dashboard": "仪表板",
+    "clients": "客户",
+    "feeds": "动态",
+    "settings": "设置"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "search": "搜索...",
+    "filter": "筛选",
+    "sort": "排序",
+    "actions": "操作"
+  }
+}

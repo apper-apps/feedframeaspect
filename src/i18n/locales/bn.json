@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "FeedFrame",
+    "subtitle": "Instagram ফিড এম্বেড",
+    "tagline": "জেনারেট • প্রিভিউ • এম্বেড"
+  },
+  "language": {
+    "select": "ভাষা নির্বাচন করুন",
+    "english": "English",
+    "chinese": "中文",
+    "hindi": "हिंदी",
+    "spanish": "Español",
+    "french": "Français",
+    "arabic": "العربية",
+    "bengali": "বাংলা",
+    "russian": "Русский",
+    "portuguese": "Português",
+    "indonesian": "Bahasa Indonesia"
+  },
+  "navigation": {
+    "dashboard": "ড্যাশবোর্ড",
+    "clients": "ক্লায়েন্ট",
+    "feeds": "ফিড",
+    "settings": "সেটিংস"
+  },
+  "common": {
+    "loading": "লোড হচ্ছে...",
+    "error": "ত্রুটি",
+    "save": "সেভ",
+    "cancel": "বাতিল",
+    "delete": "ডিলিট",
+    "edit": "এডিট",
+    "create": "তৈরি",
+    "search": "খুঁজুন...",
+    "filter": "ফিল্টার",
+    "sort": "সর্ট",
+    "actions": "অ্যাকশন"
+  }
+}

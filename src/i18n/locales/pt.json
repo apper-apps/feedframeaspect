@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "FeedFrame",
+    "subtitle": "Incorporações de Feed do Instagram",
+    "tagline": "Gerar • Visualizar • Incorporar"
+  },
+  "language": {
+    "select": "Selecionar Idioma",
+    "english": "English",
+    "chinese": "中文",
+    "hindi": "हिंदी",
+    "spanish": "Español",
+    "french": "Français",
+    "arabic": "العربية",
+    "bengali": "বাংলা",
+    "russian": "Русский",
+    "portuguese": "Português",
+    "indonesian": "Bahasa Indonesia"
+  },
+  "navigation": {
+    "dashboard": "Painel",
+    "clients": "Clientes",
+    "feeds": "Feeds",
+    "settings": "Configurações"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "search": "Pesquisar...",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "actions": "Ações"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "FeedFrame",
+    "subtitle": "Встраивание лент Instagram",
+    "tagline": "Создать • Просмотр • Встроить"
+  },
+  "language": {
+    "select": "Выберите язык",
+    "english": "English",
+    "chinese": "中文",
+    "hindi": "हिंदी",
+    "spanish": "Español",
+    "french": "Français",
+    "arabic": "العربية",
+    "bengali": "বাংলা",
+    "russian": "Русский",
+    "portuguese": "Português",
+    "indonesian": "Bahasa Indonesia"
+  },
+  "navigation": {
+    "dashboard": "Панель управления",
+    "clients": "Клиенты",
+    "feeds": "Ленты",
+    "settings": "Настройки"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "search": "Поиск...",
+    "filter": "Фильтр",
+    "sort": "Сортировка",
+    "actions": "Действия"
+  }
+}
