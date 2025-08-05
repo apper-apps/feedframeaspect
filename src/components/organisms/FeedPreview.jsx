@@ -2,60 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/atoms/Card'
 import DeviceToggle from '@/components/molecules/DeviceToggle'
 import ApperIcon from '@/components/ApperIcon'
+import instagramPostsService from '@/services/api/instagramPostsService'
+
 const FeedPreview = ({ feed, settings }) => {
   const [activeDevice, setActiveDevice] = useState("desktop")
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 // Import the Instagram posts service
-  const instagramPostsService = {
-    async getPostsByUsername(username, count = 9) {
-      await new Promise(resolve => setTimeout(resolve, 800))
-      if (Math.random() < 0.05) {
-        throw new Error('Failed to fetch Instagram posts')
-      }
-      
-      const posts = []
-      const baseId = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-      
-      for (let i = 0; i < count; i++) {
-        const postId = baseId + i
-        posts.push({
-          id: postId,
-          image: `https://picsum.photos/300/300?random=${postId}`,
-          caption: generateCaption(username, i),
-          likes: Math.floor(Math.random() * 1000) + 50,
-          timestamp: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
-        })
-      }
-      
-      return posts
-    }
-  }
-
-  function generateCaption(username, index) {
-    const captions = [
-      `Amazing content from @${username} 🌟`,
-      `Check out this incredible shot! 📸`,
-      `Living our best life ✨`,
-      `Behind the scenes magic 🎬`,
-      `Inspiration strikes again 💡`,
-      `Creative process in action 🎨`,
-      `Weekend adventures await 🌄`,
-      `Coffee and creativity ☕️`,
-      `Making memories that last 📝`,
-      `Dream big, achieve bigger 🚀`,
-      `Nature's beauty captured 🌿`,
-      `Urban exploration vibes 🏙️`,
-      `Food for the soul 🍃`,
-      `Art in everyday moments 🖼️`,
-      `Sunset thoughts 🌅`
-    ]
-    return captions[index % captions.length]
-  }
 
   // Fetch posts when feed changes
-  React.useEffect(() => {
+React.useEffect(() => {
     if (feed?.username) {
       setLoading(true)
       setError(null)
@@ -67,7 +24,8 @@ const FeedPreview = ({ feed, settings }) => {
           setPosts(fetchedPosts)
         })
         .catch(err => {
-          setError(err.message)
+          console.error('Failed to fetch Instagram posts:', err)
+          setError(`Unable to load posts for @${feed.username}`)
           setPosts([])
         })
         .finally(() => {
@@ -75,6 +33,8 @@ const FeedPreview = ({ feed, settings }) => {
         })
     } else {
       setPosts([])
+      setLoading(false)
+      setError(null)
     }
   }, [feed?.username, settings?.postsCount])
 

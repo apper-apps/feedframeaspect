@@ -53,7 +53,7 @@ const FeedConfiguration = ({ clientId, selectedFeed, onFeedUpdate }) => {
 <script src="https://cdn.feedframe.com/embed.js"></script>`
   }
 
-  const handleSave = async () => {
+const handleSave = async () => {
     if (!username.trim()) {
       toast.error("Please enter an Instagram username")
       return
@@ -69,8 +69,9 @@ const FeedConfiguration = ({ clientId, selectedFeed, onFeedUpdate }) => {
       const feedData = {
         clientId: parseInt(clientId),
         username: username.trim(),
-        settings: settings,
-        embedCode: generateEmbedCode({ username: username.trim(), settings })
+        settings: { ...settings },
+        embedCode: generateEmbedCode({ username: username.trim(), settings }),
+        updatedAt: new Date().toISOString()
       }
 
       let updatedFeed
@@ -82,9 +83,13 @@ const FeedConfiguration = ({ clientId, selectedFeed, onFeedUpdate }) => {
         toast.success("Feed created successfully!")
       }
 
-      onFeedUpdate?.(updatedFeed)
+      // Ensure callback is called to refresh parent components
+      if (onFeedUpdate && typeof onFeedUpdate === 'function') {
+        onFeedUpdate(updatedFeed)
+      }
     } catch (err) {
-      toast.error("Failed to save feed")
+      console.error('Feed save error:', err)
+      toast.error(err.message || "Failed to save feed")
     } finally {
       setSaving(false)
     }
@@ -193,10 +198,11 @@ const FeedConfiguration = ({ clientId, selectedFeed, onFeedUpdate }) => {
           </div>
         </div>
 
-        <Button
+<Button
           onClick={handleSave}
-          disabled={saving || !username.trim()}
+          disabled={saving || !username.trim() || !clientId}
           className="w-full"
+          variant="primary"
         >
           {saving ? (
             <>

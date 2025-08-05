@@ -8,14 +8,17 @@ import Empty from "@/components/ui/Empty"
 import feedService from "@/services/api/feedService"
 import { toast } from "react-toastify"
 
-const FeedList = ({ clientId, selectedFeed, onFeedSelect, onFeedDeleted }) => {
+const FeedList = ({ clientId, selectedFeed, onFeedSelect, onFeedDeleted, refreshTrigger }) => {
   const [feeds, setFeeds] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [deletingId, setDeletingId] = useState(null)
 
   const loadFeeds = async () => {
-    if (!clientId) return
+    if (!clientId) {
+      setFeeds([])
+      return
+    }
     
     try {
       setError(null)
@@ -24,15 +27,17 @@ const FeedList = ({ clientId, selectedFeed, onFeedSelect, onFeedDeleted }) => {
       const clientFeeds = allFeeds.filter(feed => feed.clientId === parseInt(clientId))
       setFeeds(clientFeeds)
     } catch (err) {
+      console.error('Failed to load feeds:', err)
       setError("Failed to load feeds")
     } finally {
       setLoading(false)
     }
   }
 
+  // Refresh feeds when client changes or when refreshTrigger changes
   useEffect(() => {
     loadFeeds()
-  }, [clientId])
+  }, [clientId, refreshTrigger])
 
   const handleDeleteFeed = async (feedId) => {
     if (!confirm("Are you sure you want to delete this feed?")) return
