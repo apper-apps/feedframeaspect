@@ -1,22 +1,82 @@
-import { useState } from "react"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card"
-import DeviceToggle from "@/components/molecules/DeviceToggle"
-import ApperIcon from "@/components/ApperIcon"
-
+import React, { useState, useEffect } from 'react'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/atoms/Card'
+import DeviceToggle from '@/components/molecules/DeviceToggle'
+import ApperIcon from '@/components/ApperIcon'
 const FeedPreview = ({ feed, settings }) => {
   const [activeDevice, setActiveDevice] = useState("desktop")
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+// Import the Instagram posts service
+  const instagramPostsService = {
+    async getPostsByUsername(username, count = 9) {
+      await new Promise(resolve => setTimeout(resolve, 800))
+      if (Math.random() < 0.05) {
+        throw new Error('Failed to fetch Instagram posts')
+      }
+      
+      const posts = []
+      const baseId = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      
+      for (let i = 0; i < count; i++) {
+        const postId = baseId + i
+        posts.push({
+          id: postId,
+          image: `https://picsum.photos/300/300?random=${postId}`,
+          caption: generateCaption(username, i),
+          likes: Math.floor(Math.random() * 1000) + 50,
+          timestamp: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
+        })
+      }
+      
+      return posts
+    }
+  }
 
-  const mockPosts = [
-    { id: 1, image: "https://picsum.photos/300/300?random=1", caption: "Beautiful sunset at the beach 🌅" },
-    { id: 2, image: "https://picsum.photos/300/300?random=2", caption: "Coffee and code ☕️💻" },
-    { id: 3, image: "https://picsum.photos/300/300?random=3", caption: "Weekend vibes 🎉" },
-    { id: 4, image: "https://picsum.photos/300/300?random=4", caption: "Nature photography 📸" },
-    { id: 5, image: "https://picsum.photos/300/300?random=5", caption: "Urban exploration 🏙️" },
-    { id: 6, image: "https://picsum.photos/300/300?random=6", caption: "Food adventures 🍕" },
-    { id: 7, image: "https://picsum.photos/300/300?random=7", caption: "Travel memories ✈️" },
-    { id: 8, image: "https://picsum.photos/300/300?random=8", caption: "Art and inspiration 🎨" },
-    { id: 9, image: "https://picsum.photos/300/300?random=9", caption: "Fitness journey 💪" },
-  ]
+  function generateCaption(username, index) {
+    const captions = [
+      `Amazing content from @${username} 🌟`,
+      `Check out this incredible shot! 📸`,
+      `Living our best life ✨`,
+      `Behind the scenes magic 🎬`,
+      `Inspiration strikes again 💡`,
+      `Creative process in action 🎨`,
+      `Weekend adventures await 🌄`,
+      `Coffee and creativity ☕️`,
+      `Making memories that last 📝`,
+      `Dream big, achieve bigger 🚀`,
+      `Nature's beauty captured 🌿`,
+      `Urban exploration vibes 🏙️`,
+      `Food for the soul 🍃`,
+      `Art in everyday moments 🖼️`,
+      `Sunset thoughts 🌅`
+    ]
+    return captions[index % captions.length]
+  }
+
+  // Fetch posts when feed changes
+  React.useEffect(() => {
+    if (feed?.username) {
+      setLoading(true)
+      setError(null)
+      
+      const postsCount = settings?.postsCount || 6
+      
+      instagramPostsService.getPostsByUsername(feed.username, postsCount)
+        .then(fetchedPosts => {
+          setPosts(fetchedPosts)
+        })
+        .catch(err => {
+          setError(err.message)
+          setPosts([])
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    } else {
+      setPosts([])
+    }
+  }, [feed?.username, settings?.postsCount])
 
   const deviceSizes = {
     desktop: "w-full max-w-4xl",
@@ -51,9 +111,9 @@ const FeedPreview = ({ feed, settings }) => {
     }
     
     return `aspect-square overflow-hidden ${radiusClass}`
-  }
+}
 
-  const postsToShow = settings ? mockPosts.slice(0, settings.postsCount) : mockPosts.slice(0, 6)
+  const postsToShow = posts
 
   if (!feed && !settings) {
     return (
@@ -97,28 +157,49 @@ const FeedPreview = ({ feed, settings }) => {
       </CardHeader>
       <CardContent>
         <div className="flex justify-center">
-          <div className={`${deviceSizes[activeDevice]} transition-all duration-300`}>
+<div className={`${deviceSizes[activeDevice]} transition-all duration-300`}>
             <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className={getLayoutClasses()}>
-                {postsToShow.map((post) => (
-                  <div key={post.id} className={getItemClasses()}>
-                    <img
-                      src={post.image}
-                      alt={post.caption}
-                      className={`w-full h-full object-cover ${
-                        settings?.layout === "list" ? "w-16 h-16 rounded-lg" : ""
-                      }`}
-                    />
-                    {settings?.showCaptions && (
-                      <div className={settings.layout === "list" ? "flex-1" : "p-2"}>
-                        <p className="text-sm text-gray-700 line-clamp-2">
-                          {post.caption}
-                        </p>
-                      </div>
-                    )}
+              {loading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-sm text-gray-600">Loading Instagram posts...</span>
                   </div>
-                ))}
-              </div>
+                </div>
+              ) : error ? (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <ApperIcon name="AlertCircle" className="w-8 h-8 text-red-500 mb-2" />
+                  <p className="text-sm text-red-600 mb-2">Failed to load posts</p>
+                  <p className="text-xs text-gray-500">{error}</p>
+                </div>
+              ) : postsToShow.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <ApperIcon name="Instagram" className="w-8 h-8 text-gray-400 mb-2" />
+                  <p className="text-sm text-gray-600">No posts found</p>
+                  <p className="text-xs text-gray-500">Check the Instagram username</p>
+                </div>
+              ) : (
+                <div className={getLayoutClasses()}>
+                  {postsToShow.map((post) => (
+                    <div key={post.id} className={getItemClasses()}>
+                      <img
+                        src={post.image}
+                        alt={post.caption}
+                        className={`w-full h-full object-cover ${
+                          settings?.layout === "list" ? "w-16 h-16 rounded-lg" : ""
+                        }`}
+                      />
+                      {settings?.showCaptions && (
+                        <div className={settings.layout === "list" ? "flex-1" : "p-2"}>
+                          <p className="text-sm text-gray-700 line-clamp-2">
+                            {post.caption}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
