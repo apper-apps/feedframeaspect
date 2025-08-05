@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "name": "Acme Corp",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "feeds": []
+  },
+  {
+    "Id": 2,
+    "name": "TechStart Inc",
+    "createdAt": "2024-01-20T14:15:00Z", 
+    "feeds": []
+  },
+  {
+    "Id": 3,
+    "name": "Creative Studio",
+    "createdAt": "2024-01-25T09:45:00Z",
+    "feeds": []
+  }
+]
