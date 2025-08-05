@@ -1,6 +1,11 @@
 import feedsData from "@/services/mockData/feeds.json"
 
-let feeds = [...feedsData]
+// Enhanced feeds with more realistic preview data
+let feeds = [...feedsData].map(feed => ({
+  ...feed,
+  // Ensure consistent preview generation
+  lastUpdated: new Date().toISOString()
+}))
 
 const feedService = {
   async getAll() {
@@ -23,7 +28,8 @@ const feedService = {
     const newFeed = {
       Id: maxId + 1,
       ...feedData,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      lastUpdated: new Date().toISOString()
     }
     feeds.push(newFeed)
     return { ...newFeed }
@@ -35,7 +41,11 @@ const feedService = {
     if (index === -1) {
       throw new Error("Feed not found")
     }
-    feeds[index] = { ...feeds[index], ...feedData }
+    feeds[index] = { 
+      ...feeds[index], 
+      ...feedData,
+      lastUpdated: new Date().toISOString()
+    }
     return { ...feeds[index] }
   },
 

@@ -22,11 +22,15 @@ React.useEffect(() => {
       instagramPostsService.getPostsByUsername(feed.username, postsCount)
         .then(fetchedPosts => {
           setPosts(fetchedPosts)
+          setError(null)
         })
         .catch(err => {
           console.error('Failed to fetch Instagram posts:', err)
-          setError(`Unable to load posts for @${feed.username}`)
-          setPosts([])
+          setError(`Unable to load posts for @${feed.username}. Showing preview with simulated content.`)
+          // Still show mock posts for preview purposes
+          return instagramPostsService.getPostsByUsername(feed.username, postsCount)
+            .then(mockPosts => setPosts(mockPosts))
+            .catch(() => setPosts([]))
         })
         .finally(() => {
           setLoading(false)
@@ -139,21 +143,37 @@ React.useEffect(() => {
                   <p className="text-xs text-gray-500">Check the Instagram username</p>
                 </div>
               ) : (
-                <div className={getLayoutClasses()}>
+<div className={getLayoutClasses()}>
                   {postsToShow.map((post) => (
                     <div key={post.id} className={getItemClasses()}>
-                      <img
-                        src={post.image}
-                        alt={post.caption}
-                        className={`w-full h-full object-cover ${
-                          settings?.layout === "list" ? "w-16 h-16 rounded-lg" : ""
-                        }`}
-                      />
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={post.image}
+                          alt={post.caption}
+                          className={`w-full h-full object-cover transition-transform duration-300 hover:scale-105 ${
+                            settings?.layout === "list" ? "w-16 h-16 rounded-lg" : ""
+                          }`}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.target.src = `https://via.placeholder.com/400x400/E4405F/FFFFFF?text=@${feed.username}`
+                          }}
+                        />
+                        {settings?.layout !== "list" && (
+                          <div className="absolute top-2 right-2 bg-black/20 rounded-full p-1">
+                            <ApperIcon name="Heart" size={14} className="text-white" />
+                          </div>
+                        )}
+                      </div>
                       {settings?.showCaptions && (
-                        <div className={settings.layout === "list" ? "flex-1" : "p-2"}>
-                          <p className="text-sm text-gray-700 line-clamp-2">
+                        <div className={settings.layout === "list" ? "flex-1 ml-3" : "p-2"}>
+                          <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed">
                             {post.caption}
                           </p>
+                          <div className="flex items-center mt-1 text-xs text-gray-500">
+                            <span>{post.likes} likes</span>
+                            <span className="mx-2">•</span>
+                            <span>{post.comments} comments</span>
+                          </div>
                         </div>
                       )}
                     </div>
