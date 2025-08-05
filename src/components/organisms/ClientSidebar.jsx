@@ -41,8 +41,8 @@ const ClientSidebar = ({ onClientSelect }) => {
   }, [])
 
   useEffect(() => {
-    const filtered = clients.filter(client =>
-      client.name.toLowerCase().includes(searchTerm.toLowerCase())
+const filtered = clients.filter(client =>
+      client.Name.toLowerCase().includes(searchTerm.toLowerCase())
     )
     setFilteredClients(filtered)
   }, [clients, searchTerm])
@@ -52,9 +52,8 @@ const ClientSidebar = ({ onClientSelect }) => {
     if (!newClientName.trim()) return
 
     try {
-      const newClient = await clientService.create({
-        name: newClientName.trim(),
-        feeds: []
+const newClient = await clientService.create({
+        Name: newClientName.trim()
       })
       setClients([...clients, newClient])
       setNewClientName("")
@@ -149,7 +148,7 @@ const ClientSidebar = ({ onClientSelect }) => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-medium text-gray-900">{client.name}</h3>
+<h3 className="font-medium text-gray-900">{client.Name}</h3>
                     <p className="text-sm text-gray-500">
                       {client.feeds?.length || 0} feeds
                     </p>

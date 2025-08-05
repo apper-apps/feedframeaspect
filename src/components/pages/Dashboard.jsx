@@ -18,7 +18,7 @@ const Dashboard = () => {
     const loadClient = async () => {
       if (clientId) {
         try {
-          const client = await clientService.getById(parseInt(clientId))
+const client = await clientService.getById(parseInt(clientId))
           setSelectedClient(client)
         } catch (err) {
           console.error("Failed to load client:", err)

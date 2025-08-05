@@ -1,9 +1,31 @@
-import { Outlet } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import LanguageSelector from "@/components/molecules/LanguageSelector";
-import React from "react";
-import ApperIcon from "@/components/ApperIcon";
+import { Outlet } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+import { useContext } from "react"
+import { useSelector } from "react-redux"
+import LanguageSelector from "@/components/molecules/LanguageSelector"
+import Button from "@/components/atoms/Button"
+import ApperIcon from "@/components/ApperIcon"
+import { AuthContext } from "../../App"
+import React from "react"
 
+const LogoutButton = () => {
+  const { logout } = useContext(AuthContext)
+  const { user } = useSelector((state) => state.user)
+  
+  if (!user) return null
+  
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={logout}
+      className="flex items-center gap-2"
+    >
+      <ApperIcon name="LogOut" size={16} />
+      <span className="hidden sm:inline">Logout</span>
+    </Button>
+  )
+}
 function Layout() {
   const { t } = useTranslation();
 
@@ -27,13 +49,14 @@ function Layout() {
                                     </h1>
                                     <p className="text-sm text-gray-500">{t("app.subtitle")}</p>
                                 </div>
-                            </div>
+</div>
                             <div className="flex items-center gap-4">
                                 <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
                                     <ApperIcon name="Zap" size={16} className="text-instagram-orange" />
                                     <span>{t("app.tagline")}</span>
                                 </div>
                                 <LanguageSelector />
+                                <LogoutButton />
                             </div>
                         </div>
                     </header>
